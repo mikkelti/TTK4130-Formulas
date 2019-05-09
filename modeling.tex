@@ -1,0 +1,29 @@
+\part{Modeling}
+\section{Passivity}
+A system consisting of a parallel or feedback interconnection of passive subsystems, is itself passive.
+
+\textbf{Definition:} If the following inequality is satisfied for all $u$ and $T \geq 0$, then the system is passive.
+\begin{equation}
+    \int_0^T y(t)u(t)dt \geq -E_0
+\end{equation}
+Note that if the roles of $u$ and $y$ are reversed, i.e. $y$ is taken to be the input and $u$ the output, then the inequality still holds.
+
+Interpretation of this definition based on energy conservation: The product $uy$ has dimension power, thus we can think about the integral as the energy supplied by $u$ or, equivalently, the energy absorbed by the system.
+\begin{enumerate}
+    \item If $\int_0^T y(t)u(t)dt \geq 0$, energy is only absorbed. This inequality will hold for a passive memoryless system (e.g. a circuit with only a resistor).
+    \item If $\int_0^T y(t)u(t)dt \geq -E_0$, the system can supply a limited amount of energy to the outside, due to initial conditions of energy storage elements, such as capacitors and inductors.
+    \item If $\int_0^T y(t)u(t)dt \to -\infty$, the system is active.
+\end{enumerate}
+A system is passive iff its transfer function is positive real.
+
+\textbf{Definition of a positive real transfer function:}
+\begin{enumerate}
+    \item All poles of $H(s)$ have real parts less than or equal to zero.
+    \item $\operatorname{Re} H(j\omega) \geq 0 \enskip \forall \enskip \omega$ that are not poles of $H(s)$.
+    \item If $j\omega_0$ is a pole, it is simple and $\operatorname{Res}_{s=j\omega_0} H(s) = \lim_{s \to j\omega_0} (s-j\omega_0)H(s)$ is real and positive. If $H(s)$ has a pole at infinity, it is simple, and $R_\infty = \lim_{\omega \to \infty} \frac{H(j\omega)}{j\omega}$ exists, and is real and positive.
+\end{enumerate}
+There is also the \textit{storage function} approach for determining passivity. Consider a state space model $\dot{x} = f(x,u)$, $y=h(x)$. If there exists a storage function $V(x) \geq 0$ and dissipation function $g(x) \geq 0$, such that
+\begin{equation}
+    \dot{V} = u^\top y - g(x),
+\end{equation}
+then the system is passive.

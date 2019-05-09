@@ -1,0 +1,124 @@
+\part{Dynamics}
+\section{Rigid body kinematics}
+\subsection{Rotation matrices}
+Let $\{\vec{a}_1, \vec{a}_2, \vec{a}_3\}$ and $\{\vec{b}_1, \vec{b}_2, \vec{b}_3\}$ be the orthogonal bases of two coordinate frames. Then the coordinate transformation from frame $b$ to frame $a$ is given by
+\begin{equation}
+    \mathbf{R}^a_b = 
+    \begin{pmatrix}
+    \mathbf{b}^a_1 & \mathbf{b}^a_2 & \mathbf{b}^a_3 
+    \end{pmatrix}
+\end{equation}
+That is,
+\begin{equation}
+    \mathbf{v}^a = \mathbf{R}^a_b \mathbf{v}^b
+\end{equation}
+The $\mathbf{R}^a_b$ matrix can also be thought of simply as a rotation of a vector. For a second, forget that the $b$ frame exists, and think only about the $a$ frame. A simple example is 
+\begin{equation}
+    \mathbf{b}^a_1 = \mathbf{R}^a_b \mathbf{a}^a_1
+\end{equation}
+which shows that the first basis vector of the $a$ frame is rotated to the first basis vector of the $b$ frame, when everything is referred to frame $a$. In this sense the matrix represents a rotation from $a$ to $b$.
+\subsection{Differentiation of vectors and matrices}
+\begin{equation}
+    \frac{\prescript{a}{}d}{dt} \vec{u} = \frac{\prescript{b}{}d}{dt} \vec{u} + \vec{\omega}_{ab} \times \vec{u},
+\end{equation}
+Skew-symmetric form of coordinate vector
+\begin{equation}
+    \mathbf{u}^\times := 
+    \begin{pmatrix}
+    0 & -u_3 & u_2\\
+    u_3 & 0 & -u_1\\
+    -u_2 & u_1 & 0
+    \end{pmatrix}
+\end{equation}
+Skew-symmetric form of angular velocity vector
+\begin{equation}
+    (\boldsymbol{\omega}^a_{ab})^\times = \dot{\mathbf{R}}^a_b (\mathbf{R}^a_b)^\top
+\end{equation}
+Coordinate transformation
+\begin{equation}
+    (\boldsymbol{\omega}^a_{ab})^\times = \mathbf{R}^a_b (\boldsymbol{\omega}^b_{ab})^\times \mathbf{R}^b_a, \quad
+    \mathbf{R}^b_a = (\mathbf{R}^a_b)^{-1} = (\mathbf{R}^a_b)^\top
+\end{equation}
+
+\subsection{Coordinate systems}
+Cylindrical coordinates $(r, \theta, z)$:
+\begin{align}
+    x &= r\cos(\theta)\\
+    y &= r\sin(\theta)\\
+    z &= z\\
+    r &= \sqrt{x^2 + y^2}\\
+    \theta &= 
+    \begin{cases}
+    0 \text{ if } x = 0 \text{ and } y = 0\\
+    \arctan(\frac{y}{x}) \text{ if } x > 0\\
+    \arctan(\frac{y}{x}) + \pi \text{ if } x < 0 \text{ and } y \geq 0\\
+    \arctan(\frac{y}{x}) - \pi \text{ if } x < 0 \text{ and } y < 0\\
+    \frac{\pi}{2} \text{ if } x = 0 \text{ and } y > 0\\
+    -\frac{\pi}{2} \text{ if } x = 0 \text{ and } y < 0
+    \end{cases}\\
+    dV &= dxdydz = rdrd\theta dz
+\end{align}
+Spherical coordinates $(r, \varphi, \theta)$, $\varphi$ angle from $z$-axis:
+\begin{align}
+    x &= r\sin(\varphi)\cos(\theta)\\
+    y &= r\sin(\varphi)\sin(\theta)\\
+    z &= r\cos(\varphi)\\
+    r &= \sqrt{x^2 + y^2 + z^2}\\
+    \theta &\text{ defined as above.}\\
+    dV &= dxdydz = r^2\sin(\varphi)dr d\varphi d\theta
+\end{align}
+Note that $r \geq 0$, $0 \leq \theta \leq 2\pi$ and $0 \leq \varphi \leq \pi$ (typical definition). The definition of $\theta$ above has the range $(-\pi, \pi]$, to obtain only positive results $2\pi$ can be added to negative values.
+\todo[inline]{Add position, velocity and acceleration in Cartesian, cylindrical and spherical coordinates.}
+
+\subsection{The center of mass}
+The mass of a rigid body $b$ is
+\begin{equation}
+    m = \int_{b}dm = \int_{b} \rho(x,y,z)dV
+\end{equation}
+The center of mass $\vec{r}_c$ is defined as
+\begin{equation}
+    \vec{r}_c = \frac{1}{m} \int_{b} \vec{r}_p dm
+\end{equation}
+where $\vec{r}_p$ is the position of a mass element $dm$ that is fixed in frame $b$. The $x$--coordinate of the center of mass is given by
+\begin{align}
+    x_c = \frac{1}{m} \iiint \limits_b x_p \rho(x,y,z)dV
+\end{align}
+The definitions for $y$ and $z$ are exactly the same. Typically $(x_p, y_p, z_p) = (x, y, z)$.
+
+\section{Newton-Euler equations of motion}
+\subsection{Kinetic energy}
+\begin{equation}
+    \mathcal{T} = \frac{1}{2} m (\mathbf{v}_c^b)^\top \mathbf{v}_c^b +  \frac{1}{2} (\boldsymbol{\omega}_{ib}^b)^\top \mathbf{M}_{b/c}^b \boldsymbol{\omega}_{ib}^b
+\end{equation}
+The subscript $c$ denotes the center of mass and the superscript $b$ denotes a coordinate vector/matrix in frame $b$. $\boldsymbol{\omega}_{ib}^b$ is the angular velocity of frame $b$ relative to frame $i$. $\mathbf{M}_{b/c}^b$ is the inertia matrix of $b$ about $c$, i.e. the inertia matrix of the rigid body about the center of mass.
+
+\subsection{Inertia matrix}
+\begin{equation}
+    \mathbf{M}_{b/c}^b = -\int_b (\mathbf{r}^b)^\times (\mathbf{r}^b)^\times dm = \int_b \left[ (\mathbf{r}^b)^\top \mathbf{r}^b \mathbf{I} - \mathbf{r}^b (\mathbf{r}^b)^\top \right] dm
+\end{equation}
+Fun facts: Swap the $b$ superscripts with $i$ on the right hand side to get $\mathbf{M}_{b/c}^i$. $\mathbf{M}_{b/c}^b$ is positive definite, since the kinetic energy $\mathcal{T} \geq 0$. Note that the integral above is a triple integral of a $3 \times 3$-matrix.
+
+\subsection{Parallel axis theorem}
+The inertia matrix of $b$ about a point $o$ is given by
+\begin{equation}
+    \mathbf{M}_{b/o}^b = \mathbf{M}_{b/c}^b - m (\mathbf{r}_g^b)^\times (\mathbf{r}_g^b)^\times =
+    \mathbf{M}_{b/c}^b + m\left[ (\mathbf{r}_g^b)^\top \mathbf{r}_g^b \mathbf{I} - \mathbf{r}_g^b (\mathbf{r}_g^b)^\top \right]
+\end{equation}
+where $\mathbf{r}_g^b$ is the vector from the point $o$ to the center of mass $c$. If $o$ is the origin this corresponds to $\mathbf{r}_c^b$. In its simplest form with two parallel axes, the formula reduces to
+\begin{equation}
+    I = I_c + md^2
+\end{equation}
+where $I_c$ is the moment of inertia about the axis through the center of mass and $d$ is the distance between the axes.
+\section{Lagrangian dynamics}
+Lagrangian
+\begin{equation}
+    \mathcal{L}(\mathbf{q, \dot{q}}, t) = \mathcal{T}(\mathbf{q, \dot{q}}, t) - \mathcal{U}(\mathbf{q})
+\end{equation}
+Lagrange's equation of motion
+\begin{equation}
+    \frac{d}{dt} \left( \frac{\partial \mathcal{L}}{\partial \dot{q}_i} \right) - \frac{\partial \mathcal{L}}{\partial q_i} = \tau_i
+\end{equation}
+Generalized force
+\begin{equation}
+    Q_i = \sum_{k=1}^N \frac{\partial \vec{r}_k}{\partial q_i} \cdot \vec{F}_k
+\end{equation}

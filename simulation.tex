@@ -1,0 +1,47 @@
+\part{Simulation}
+We are concerned with solving the IVP
+\begin{equation}
+    \Dot{y} = f(y,t), \quad y(t_0) = y_0
+\end{equation}
+The stability of a numerical method is ensured if $|R(h\lambda_i)| \leq 1$ for all eigenvalues $\lambda_i$.
+
+\section{Stability functions}
+\subsection{ERK methods}
+\begin{equation}
+    R_E(h\lambda) = \det \left[ I - h\lambda (A - \mathbf{1} b^\top) \right], \enskip \text{where} \enskip  \mathbf{1} = (1, ... , 1)^\top
+\end{equation}
+Note that $R_E(h\lambda)$ will be a polynomial in $h\lambda$ of order less than or equal to $\sigma$ (the number of stages).
+
+\subsection{IRK methods}
+\begin{align}
+    R(h\lambda) = \left[ 1 + h\lambda b^\top (I-h\lambda A)^{-1} \mathbf{1} \right]\\
+    R(h\lambda) = \frac{\det \left[ I - h\lambda(A - \mathbf{1}b^\top) \right]}{\det(I - h\lambda A)}
+\end{align}
+
+\subsection{Aliasing}
+The \textit{Nyquist frequency} is half of the sampling rate
+\begin{equation}
+    \omega_{\text{Nyquist}} = \frac{1}{2} \cdot \frac{2\pi}{h}, \enskip \text{where $h$ is the step size.}
+\end{equation}
+Two systems oscillating at a low frequency $\omega < \omega_{\text{Nyquist}}$ and a high frequency $\omega + 2k\frac{\pi}{h} > \omega_{\text{Nyquist}}$ ($k$ integer) will intercept at all sampling points, and therefore a solver will not be able to distinguish them. More specifically, the solver will believe that the system with higher frequency is the system with lower frequency, when fitting the curve.
+
+\subsection{A- and L-stability}
+\textbf{Definition:} A method is A-stable if $|R(h\lambda)| \leq 1 \enskip \forall \enskip \operatorname{Re} \lambda \leq 0$.\\
+This definitions means that an A-stable method is stable for all stable test systems $\dot{y} = \lambda y$. Note also that no ERK method can be A-stable, since $|R_E(h\lambda)| \to \infty$ as $|\lambda| \to \infty$.\\
+\textbf{Definition:} A method is L-stable if it is A-stable and $|R(j\omega h)| \to 0$ when $\omega \to \infty \enskip \forall$ systems $\dot{y} = j\omega y$.\\
+A-stable methods can suffer from aliasing for systems with fast dynamics (faster than Nyquist frequency), whereas an L-stable method will simply damp out these fast dynamics. This means that the L-stable method might give a better qualitative representation of what the actual solution looks like.
+
+\subsection{Stiffly accurate methods and algebraic stability}
+\textbf{Definition:} A method is stiffly accurate if
+\begin{equation}
+    \det(A) \neq 0 \text{ and } b = A^\top [0, 0, ..., 1]^\top
+\end{equation}
+Note: A-stable and stiffly accurate $\implies$ L-stable.\\
+\textbf{Definition:} A method is algebraically stable if 
+\begin{equation}
+    M = \operatorname{diag}(b)A + (\operatorname{diag}(b)A)^\top + bb^\top
+\end{equation}
+is positive semi-definite. Note: Algebraically stable $\implies$ A-stable.
+
+\subsection{DAEs}
+A fully implicit ODE, $F(\dot{x}, x, u) = 0$ is a DAE if $\frac{\partial F}{\partial \dot{x}}$ is rank deficient.

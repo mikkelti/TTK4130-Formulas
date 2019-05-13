@@ -1,7 +1,47 @@
 \part{Tables}
+
+\section{Inverse of 3x3 matrix}
+\begin{equation}
+\left(\begin{array}{ccc}
+    a & b & c\\
+    d & e & f\\
+    g & h &i
+\end{array}\right)^{-1}
+=
+{\frac{1}{\rm{det}}}
+\left(\begin{array}{rrr}
+    e i - f h & -(b i - c h) & b f - c e\\
+    -(d i - f g) & a i - c g & -(a f -c d)\\
+    d h - e g & -(a h - b g) & a e - b d
+\end{array}\right)
+\end{equation}
+
+
+\section{Trig functions}
+\begin{align}
+    \cot(\theta) &= \frac{1}{\tan(\theta)}\\
+    \sec(\theta) &= \frac{1}{\cos(\theta)}\\
+    \csc(\theta) &= \frac{1}{\sin(\theta)}
+\end{align}
+
+\section{Trig derivatives}
+\begin{align}
+    \frac{d}{dt}tan(x) &= sec^2(x) \\
+    \frac{d}{dt}csc(x) &= -csc(x)cot(x) \\
+    \frac{d}{dt}sec(x) &= sec(x)tan(x) \\
+    \frac{d}{dt}cot(x) &= -csc^2(x) \\
+\end{align}
+
+
+
 \section{Trig identities}
 \begin{align}
-    \cos(\theta)\sin(\theta) = \frac{1}{2}\sin(2\theta)
+    \cos(\theta)\sin(\theta) &= \frac{1}{2}\sin(2\theta)\\
+    \cos^2(\theta)-\sin^2(\theta) &= \cos(2\theta)\\
+    \sin(\alpha+\beta) &= \sin(\alpha)\cos(\beta) + \cos(\alpha)\sin(\beta)\\
+    \cos(\alpha+\beta) &= \cos(\alpha)\cos(\beta) - \sin(\alpha)\sin(\beta)\\
+    \sin(\alpha-\beta) &= \sin(\alpha)\cos(\beta) - \cos(\alpha)\sin(\beta)\\
+    \cos(\alpha-\beta) &= \cos(\alpha)\cos(\beta) + \sin(\alpha)\sin(\beta)
 \end{align}
 
 \section{Laplace transforms}

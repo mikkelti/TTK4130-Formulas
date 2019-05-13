@@ -1,4 +1,31 @@
 \part{Modeling}
+\section{Some useful models}
+\subsection{Mass spring damper}
+\begin{align}
+    m\ddot{x} + c\dot{x} + kx = 0\\
+    \ddot{x} + 2\zeta \omega_0 \dot{x} + \omega_0^2 x = 0
+\end{align}
+Note: A driving force $F(t)$ could be included on the right hand side.
+
+\subsection{Capacitor and inductor equations}
+\begin{align}
+    i_C(t) = C\frac{dv_C}{dt}(t)\\
+    v_L(t) = L\frac{di_L}{dt}(t)
+\end{align}
+
+\subsection{Pendulum equation}
+\begin{equation}
+    \ddot{\theta} + \frac{g}{l} \sin(\theta) = 0
+\end{equation}
+For $\theta \ll 1$ we get the approximation
+\begin{equation}
+    \ddot{\theta} + \frac{g}{l}\theta = 0
+\end{equation}
+with period
+\begin{equation}
+    T_0 = \frac{2\pi}{\omega_0} = 2\pi \sqrt{\frac{l}{g}}
+\end{equation}
+
 \section{Passivity}
 A system consisting of a parallel or feedback interconnection of passive subsystems, is itself passive.
 

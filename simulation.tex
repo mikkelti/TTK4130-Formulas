@@ -3,9 +3,14 @@ We are concerned with solving the IVP
 \begin{equation}
     \Dot{y} = f(y,t), \quad y(t_0) = y_0
 \end{equation}
-The stability of a numerical method is ensured if $|R(h\lambda_i)| \leq 1$ for all eigenvalues $\lambda_i$.
+The Jacobian of the system is defined as
+\begin{equation}
+    J = \frac{\partial f}{\partial y}(y,t)
+\end{equation}
+Note that the Jacobian is $A$ for a linear, time-invariant system $\dot{x} = Ax + Bu$.
 
 \section{Stability functions}
+The stability of a numerical method is ensured if $|R(h\lambda_i)| \leq 1$ for all eigenvalues $\lambda_i$.
 \subsection{ERK methods}
 \begin{equation}
     R_E(h\lambda) = \det \left[ I - h\lambda (A - \mathbf{1} b^\top) \right], \enskip \text{where} \enskip  \mathbf{1} = (1, ... , 1)^\top
@@ -18,6 +23,7 @@ Note that $R_E(h\lambda)$ will be a polynomial in $h\lambda$ of order less than 
     R(h\lambda) = \frac{\det \left[ I - h\lambda(A - \mathbf{1}b^\top) \right]}{\det(I - h\lambda A)}
 \end{align}
 
+\section{Stability of RK methods}
 \subsection{Aliasing}
 The \textit{Nyquist frequency} is half of the sampling rate
 \begin{equation}
@@ -43,5 +49,54 @@ Note: A-stable and stiffly accurate $\implies$ L-stable.\\
 \end{equation}
 is positive semi-definite. Note: Algebraically stable $\implies$ A-stable.
 
-\subsection{DAEs}
-A fully implicit ODE, $F(\dot{x}, x, u) = 0$ is a DAE if $\frac{\partial F}{\partial \dot{x}}$ is rank deficient.
+\section{DAEs}
+A fully implicit ODE, $F(\dot{x}, x, u) = 0$ is a DAE if $\frac{\partial F}{\partial \dot{x}}$ is rank deficient (note that the partial derivative is with respect to $\dot{x}$, not $x$).
+
+Method for finding index (one way to go about it):
+\begin{itemize}
+    \item Differentiate algebraic equation(s) $g(x,z)$ until you can solve for the algebraic variable(s).
+    \item The DAE system is now index 1. If you differentiated $p$ times in the previous step, the index is $p+1$.
+\end{itemize}
+
+\section{Advanced topics}
+\subsection{Automatic adjustment of step size}
+The step size $h$ can be selected so that the desired accuracy is obtained. Variable-step methods are useful for stiff systems (large spread in eigenvalues of Jacobian) and systems with strong nonlinearities (eigenvalues of Jacobian of linearization change a lot for each time step).
+
+Idea: Estimate local error and adjust $h$ such that the local error is less than the specified tolerance.
+
+Implementation:
+\begin{enumerate}
+    \item Compute the next iteration with two different methods: $y_{n+1}$ with a method of order $p$ and ${\hat{y}_{n+1}}$ with a method of order $\hat{p} = p+1$.
+    \item The local exact solution is then
+    \begin{equation}
+        y_L(t_n;t_{n+1}) = y_{n+1} + e_{n+1} = \hat{y}_{n} + \hat{e}_{n+1}
+    \end{equation}
+    with $e_{n+1} = O(h^{p+1})$ and $\hat{e}_{n+1} = O(h^{p+2})$.
+    \item Since $\hat{e}_{n+1} \ll e_{n+1}$, we get the following 
+    \begin{equation}
+        y_{n+1} - \hat{y}_{n} = e_{n+1} - \hat{e}_{n+1} \approx e_{n+1}
+    \end{equation}
+    $h$ can then be chosen such that the local error $e_{n+1}$ is as small as desired.
+\end{enumerate}
+Since $\hat{y}_{n+1}$ is computed with a higher-order method than $y_{n+1}$, it would make sense to use that for the next iteration instead, this is called local extrapolation. Whichever solution is chosen as $\hat{y}_{n+1}$ is called the \emph{embedded solution}.
+
+\subsection{Event detection}
+Let the event be given by
+\begin{equation}
+    g(y,t) = 0
+\end{equation}
+e.g. a bouncing ball hitting the floor (crossing the $x$-axis). By checking for sign changes in $g$ for each iteration, the time $t_n + \alpha$ of the event can be found by solving
+\begin{equation}
+    g[y_n(\alpha), t_n + \alpha h] = 0
+\end{equation}
+for $\alpha \in [0,1]$, where $y_n(\alpha)$ is the \emph{dense output} found with interpolation (see page 565).
+
+\subsection{Multistep methods}
+A one-step method only uses the previous value $y_n$ to compute $y_{n+1}$. A multistep method, on the other hand, uses $y_{n-1}$, $y_{n-2}$, etc. as well. The scheme looks like this:
+\begin{equation}
+    \begin{split}
+    y_{n+1} &= \alpha_1 y_n + \alpha_2 y_{n-1} + \dots \\ &+ h(\beta_0 f(y_{n+1}, t_{n+1}) + \beta_1 f(y_n, t_n) + \beta_2 f(y_{n-1}, t_{n-1}) + \dots)
+    \end{split}
+\end{equation}
+The parameters/weights are derived by curve fitting polynomials to the previous time steps.
+The known stability concepts from one-step methods apply to multistep methods as well.

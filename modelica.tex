@@ -1,0 +1,26 @@
+\part{Modelica reference}
+\todo[inline]{Potentially add some stuff from exercise 4, like user-defined types. Look at connectors.} Modelica is an object-oriented, equation-based modeling language. This section shows some example models. An important thing to note is that you need the same number of equations as the number of variables.
+\begin{minted}{modelica}
+    model Oscillator "Descriptive comment"
+        constant Real m = 1; // This comment is ignored by the compiler.
+        parameter Real c = 1, k = 1;
+        Real x(start=1); // 'start' is a hint to the compiler.
+        Real vx;
+    equation
+        der(x) = vx;
+        m*der(vx) + c*vx + k*x = 0;
+        // Could also add algebraic equations to make it a DAE.
+    intial equation
+        vx = 0; // This is an actual constraint, unlike 'start'.
+    end Oscillator;
+\end{minted}
+Next up, we look at a model which inherits from \texttt{Oscillator}, by use of the keyword \texttt{extends}:
+\begin{minted}{modelica}
+    model DrivenOscillator
+        extends Oscillator;
+        Real F;
+    equation
+        F = sin(time);
+        m*der(vx) + c*vx + k*x = F;
+    end DrivenOscillator;
+\end{minted}

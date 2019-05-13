@@ -17,6 +17,17 @@ The $\mathbf{R}^a_b$ matrix can also be thought of simply as a rotation of a vec
     \mathbf{b}^a_1 = \mathbf{R}^a_b \mathbf{a}^a_1
 \end{equation}
 which shows that the first basis vector of the $a$ frame is rotated to the first basis vector of the $b$ frame, when everything is referred to frame $a$. In this sense the matrix represents a rotation from $a$ to $b$.
+
+\subsection{Homogeneous transformation matrices}
+\begin{equation}
+    T^a_b = 
+    \begin{pmatrix}
+        R^a_b & r^a_{ab}\\
+        \mathbf{0}^\top & 1
+    \end{pmatrix}
+\end{equation}
+where $r^a_{ab}$ is the origin of frame $b$ in $a$ coordinates.
+
 \subsection{Differentiation of vectors and matrices}
 \begin{equation}
     \frac{\prescript{a}{}d}{dt} \vec{u} = \frac{\prescript{b}{}d}{dt} \vec{u} + \vec{\omega}_{ab} \times \vec{u},
@@ -68,7 +79,7 @@ Spherical coordinates $(r, \varphi, \theta)$, $\varphi$ angle from $z$-axis:
     dV &= dxdydz = r^2\sin(\varphi)dr d\varphi d\theta
 \end{align}
 Note that $r \geq 0$, $0 \leq \theta \leq 2\pi$ and $0 \leq \varphi \leq \pi$ (typical definition). The definition of $\theta$ above has the range $(-\pi, \pi]$, to obtain only positive results $2\pi$ can be added to negative values.
-\todo[inline]{Add position, velocity and acceleration in Cartesian, cylindrical and spherical coordinates.}
+\todo[inline]{Add position, velocity and acceleration in Cartesian, cylindrical and spherical coordinates. Or at least the general formulas.}
 
 \subsection{The center of mass}
 The mass of a rigid body $b$ is
@@ -85,7 +96,21 @@ where $\vec{r}_p$ is the position of a mass element $dm$ that is fixed in frame 
 \end{align}
 The definitions for $y$ and $z$ are exactly the same. Typically $(x_p, y_p, z_p) = (x, y, z)$.
 
+\subsection{Other useful formulas}
+Relation between linear and angular velocity
+\begin{equation}
+    v = \omega r
+\end{equation}
+Relationships between torque, angular momentum and angular velocity
+\begin{align}
+    \vec{\tau} = \vec{r} \times \vec{F}\\
+    \vec{\tau} = \frac{d\vec{L}}{dt}\\
+    \vec{\tau} = I \dot{\omega}\\
+    P = \tau \omega
+\end{align}
+
 \section{Newton-Euler equations of motion}
+\todo[inline]{Add the actual Newton-Euler equations.}
 \subsection{Kinetic energy}
 \begin{equation}
     \mathcal{T} = \frac{1}{2} m (\mathbf{v}_c^b)^\top \mathbf{v}_c^b +  \frac{1}{2} (\boldsymbol{\omega}_{ib}^b)^\top \mathbf{M}_{b/c}^b \boldsymbol{\omega}_{ib}^b
@@ -96,7 +121,10 @@ The subscript $c$ denotes the center of mass and the superscript $b$ denotes a c
 \begin{equation}
     \mathbf{M}_{b/c}^b = -\int_b (\mathbf{r}^b)^\times (\mathbf{r}^b)^\times dm = \int_b \left[ (\mathbf{r}^b)^\top \mathbf{r}^b \mathbf{I} - \mathbf{r}^b (\mathbf{r}^b)^\top \right] dm
 \end{equation}
-Fun facts: Swap the $b$ superscripts with $i$ on the right hand side to get $\mathbf{M}_{b/c}^i$. $\mathbf{M}_{b/c}^b$ is positive definite, since the kinetic energy $\mathcal{T} \geq 0$. Note that the integral above is a triple integral of a $3 \times 3$-matrix.
+Fun facts: Swap the $b$ superscripts with $i$ on the right hand side to get $\mathbf{M}_{b/c}^i$. $\mathbf{M}_{b/c}^b$ is positive definite, since the kinetic energy $\mathcal{T} \geq 0$. Note that the integral above is a triple integral of a $3 \times 3$-matrix. About a specified axis the formula reduces to
+\begin{equation}
+    I = \int_{b} (\mathbf{r}^b)^\top \mathbf{r}^b dm
+\end{equation}
 
 \subsection{Parallel axis theorem}
 The inertia matrix of $b$ about a point $o$ is given by

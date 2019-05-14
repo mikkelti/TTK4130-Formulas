@@ -51,6 +51,9 @@ Coordinate transformation
     \mathbf{R}^b_a = (\mathbf{R}^a_b)^{-1} = (\mathbf{R}^a_b)^\top
 \end{equation}
 
+\subsection{Kinematic differential equations}
+For Euler angles, when the middle rotation is $\frac{\pi}{2}$ radians, the $E$ matrix in the kinematic differential equation is singular. This is because this rotation moves the third axis of rotation to the first axis of rotation, such that we lose a degree of freedom. 
+
 \subsection{Coordinate systems}
 Cylindrical coordinates $(r, \theta, z)$:
 \begin{align}
@@ -101,16 +104,8 @@ Relation between linear and angular velocity
 \begin{equation}
     v = \omega r
 \end{equation}
-Relationships between torque, angular momentum and angular velocity
-\begin{align}
-    \vec{\tau} = \vec{r} \times \vec{F}\\
-    \vec{\tau} = \frac{d\vec{L}}{dt}\\
-    \vec{\tau} = I \dot{\omega}\\
-    P = \tau \omega
-\end{align}
 
 \section{Newton-Euler equations of motion}
-\todo[inline]{Add the actual Newton-Euler equations.}
 \subsection{Kinetic energy}
 \begin{equation}
     \mathcal{T} = \frac{1}{2} m (\mathbf{v}_c^b)^\top \mathbf{v}_c^b +  \frac{1}{2} (\boldsymbol{\omega}_{ib}^b)^\top \mathbf{M}_{b/c}^b \boldsymbol{\omega}_{ib}^b
@@ -137,6 +132,16 @@ where $\mathbf{r}_g^b$ is the vector from the point $o$ to the center of mass $c
     I = I_c + md^2
 \end{equation}
 where $I_c$ is the moment of inertia about the axis through the center of mass and $d$ is the distance between the axes.
+
+\subsection{Other useful formulas}
+Relationships between torque, angular momentum and angular velocity
+\begin{align}
+    \vec{\tau} = \vec{r} \times \vec{F}\\
+    \vec{\tau} = \frac{d\vec{L}}{dt}\\
+    \vec{\tau} = I \dot{\omega}\\
+    P = \tau \omega
+\end{align}
+
 \section{Lagrangian dynamics}
 Lagrangian
 \begin{equation}

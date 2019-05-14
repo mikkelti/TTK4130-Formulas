@@ -1,18 +1,31 @@
 \part{Balance equations}
-\todo[inline]{Add general equations for mass- and energy balances.}
 \section{Kinematics of flow}
 \subsection{Material derivative}
 Let $\mathbf{x}$ be the position of some fluid particle, with velocity $\dot{\mathbf{x}} = \mathbf{v}$. Further, let $\varphi$ be some quantity related to the particle, e.g. its temperature. The material derivative of $\varphi$ is then defined as
 \begin{equation}
     \frac{D\varphi}{Dt} = \frac{\partial \varphi}{\partial t} + \mathbf{v}^\top \nabla \varphi
 \end{equation}
+
+\section{Mass, momentum and energy balances}
+\subsection{Mass balance}
+Level of tank
+\begin{align}
+    \frac{d}{dt}(\rho A h) = w_1 - w_2\\
+    \dot{h} = \frac{1}{\rho A} (w1 - w2)
+\end{align}
+
+\subsection{Momentum balance}
 Bernoulli's equation for stationary frictionless flow along a streamline for an incompressible fluid
 \begin{equation}
     \frac{1}{2} (v_2^2 - v_1^2) + \frac{p_2 - p_1}{\rho} + (z_2 - z_1)g = 0
 \end{equation}
+
+\subsection{Energy balance}
 Internal energy, enthalpy, heat capacities and temperature
 \begin{align}
     h = c_p T\\
     u = c_v T
 \end{align}
 Note that all quantities (except temperature) are specific (per unit mass) in these equations. 
+
+\section{Gas dynamics}

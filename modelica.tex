@@ -24,3 +24,32 @@ Next up, we look at a model which inherits from \texttt{Oscillator}, by use of t
         m*der(vx) + c*vx + k*x = F;
     end DrivenOscillator;
 \end{minted}
+\newpage
+The third example deals with the use of connectors.
+\begin{minted}{modelica}
+    connector Pin "Electrical pin";
+        Modelica.SIunits.Voltage v; // Potential/energy level
+        flow Modelica.SIunits.Current i; // Flow
+    end Pin;
+
+    partial model TwoPin // partial because of 6 var. and only 5 eq.
+        Pin p, n;
+        Modelica.SIunits.Voltage v; // Voltage across component
+        Modelica.SIunits.Current i; // Current through component
+    equation
+        v = p.v - n.v;
+        p.i + n.i = 0 // KCL
+        i = p.i // Current into component
+    end TwoPin;
+
+    model Inductor
+        extends TwoPin;
+        parameter Modelica.SIunits.Inductance L;
+    equation
+        v = L * der(i);
+    end Inductor;
+\end{minted}
+Declaring your own type (based on \texttt{Real}) in Modelica is done in the following way:
+\begin{minted}{modelica}
+    type Voltage = Real(unit = "V", min = 0, max = 5.0);
+\end{minted}

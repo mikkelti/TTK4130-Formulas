@@ -83,6 +83,21 @@ Spherical coordinates $(r, \varphi, \theta)$, $\varphi$ angle from $z$-axis:
 \end{align}
 Note that $r \geq 0$, $0 \leq \theta \leq 2\pi$ and $0 \leq \varphi \leq \pi$ (typical definition). The definition of $\theta$ above has the range $(-\pi, \pi]$, to obtain only positive results $2\pi$ can be added to negative values.
 
+Next I list the position, velocity and acceleration vectors for these coordinate systems. Cylindrical first:
+\begin{align}
+    \vec{r} &= r\vec{e}_r + z\vec{e}_z\\
+    \vec{v} &= \dot{r}\vec{e}_r + r\dot{\theta}\vec{e}_{\theta} + \dot{z}\vec{e}_z\\
+    \vec{a} &= \left ( \ddot{r} - r\dot{\theta}^2\right )\vec{e}_r + \left ( r \ddot{\theta} + 2 \dot{r} \dot{\theta} \right )\vec{e}_{\theta} + \ddot{z}\vec{e}_z
+\end{align}
+Spherical:
+\begin{align}
+    \vec{r} & = r \vec{e}_r\\
+    \vec{v} & = \dot{r} \vec{e}_r + r\,\dot{\theta}\vec{e}_\theta + r\,\dot{\varphi}\,\sin\theta \vec{e}_\varphi \\
+    \vec{a} & = \left( a - r \dot{\theta}^2 - r\dot{\varphi}^2\sin^2\theta \right)\vec{e}_r \\
+     & + \left( r \ddot{\theta} + 2 \dot{r} \dot{\theta} - r\dot{\varphi}^2\sin\theta\cos\theta \right) \vec{e}_\theta \\
+     & + \left( r\ddot{\varphi}\,\sin\theta + 2\dot{r}\,\dot{\varphi}\,\sin\theta + 2 r\,\dot{\theta}\,\dot{\varphi}\,\cos\theta \right) \vec{e}_\varphi
+\end{align}
+
 \subsection{The center of mass}
 The mass of a rigid body $b$ is
 \begin{equation}

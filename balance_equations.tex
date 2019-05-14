@@ -13,19 +13,28 @@ Level of tank
     \frac{d}{dt}(\rho A h) = w_1 - w_2\\
     \dot{h} = \frac{1}{\rho A} (w1 - w2)
 \end{align}
+Remember that the pressure at the bottom of a (open) tank is $\rho g h$.
 
 \subsection{Momentum balance}
 Bernoulli's equation for stationary frictionless flow along a streamline for an incompressible fluid
 \begin{equation}
     \frac{1}{2} (v_2^2 - v_1^2) + \frac{p_2 - p_1}{\rho} + (z_2 - z_1)g = 0
 \end{equation}
+See page 426-427 for relevant examples on momentum balances.
 
 \subsection{Energy balance}
-Internal energy, enthalpy, heat capacities and temperature
+The total energy of a volume element $dV$ is
+\begin{equation}
+    \rho e dV,
+\end{equation}
+where $e = u + \frac{1}{2}v^2 + \phi$, i.e. the sum of specific internal, kinetic and potential energy.
+Internal energy, enthalpy, heat capacities and temperature have the following relationships
 \begin{align}
     h = c_p T\\
     u = c_v T
 \end{align}
-Note that all quantities (except temperature) are specific (per unit mass) in these equations. 
-
-\section{Gas dynamics}
+Note that all quantities (except temperature) are specific (per unit mass) in these equations. The specific enthalpy is given by
+\begin{equation}
+    h = u + \frac{p}{\rho},
+\end{equation}
+where $u$ is the internal energy. See page 443-445 for relevant examples of energy balances.

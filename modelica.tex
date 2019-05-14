@@ -53,3 +53,15 @@ Declaring your own type (based on \texttt{Real}) in Modelica is done in the foll
 \begin{minted}{modelica}
     type Voltage = Real(unit = "V", min = 0, max = 5.0);
 \end{minted}
+The final example shows the use of the \texttt{replaceable} and \texttt{redeclare} keywords.
+\begin{minted}{modelica}
+    model System
+        replaceable Sensor sensor;
+    end System;
+
+    model SystemVariation
+        extends System(
+            redeclare Cheapsensor sensor
+        );
+    end SystemVariation;
+\end{minted}
